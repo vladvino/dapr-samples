@@ -1,0 +1,37 @@
+# API BASE URL
+@api = https://localhost:8081/dapr
+
+# INVOKE A SERVICE
+POST {{api}}/echo
+api-key: {{api-key}}
+ocp-apim-trace: true
+Content-Type: application/json
+
+{
+    "message": "Hello! {{$localDatetime rfc1123}}"
+}
+###
+
+# SEND MESSAGE TO PUB/SUB TOPIC
+POST {{api}}/message
+api-key: {{api-key}}
+ocp-apim-trace: true
+Content-Type: application/json
+
+{
+    "content": "Hello! {{$localDatetime rfc1123}}"
+}
+###
+
+# SAVE MESSAGE USING OUTBOUND BINDING
+POST {{api}}/save
+api-key: {{api-key}}
+ocp-apim-trace: true
+
+{
+  "city": "SEA,",
+  "time": {{$localDatetime rfc1123}},
+  "metric": "AQI",
+  "value": {{$randomInt 1 450}}
+}
+

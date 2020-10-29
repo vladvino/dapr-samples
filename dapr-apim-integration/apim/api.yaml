@@ -2,15 +2,17 @@ openapi: 3.0.1
 info:
   title: dapr
   version: '1.0'
+  description: API for demonstrating Dapr integration policies in Azure API Management
+  contact:
+      email: vlvinogr@microsoft.com
 servers:
-  - url: http://dapr-apim-demo.azure-api.net
-  - url: https://dapr-apim-demo.azure-api.net
+  - url: http://one.azure-api.net
 paths:
   /echo:
     post:
-      summary: Echo Service
-      description: Invoke service using Dapr API
-      operationId: echo
+      summary: Invoke service
+      description: Invoke service
+      operationId: invoke-service
       requestBody:
         content:
           application/json:
@@ -19,11 +21,13 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+          - dapr-invoke
   /message:
     post:
-      summary: Message Topic
-      description: Post to topic using Dapr API
-      operationId: message
+      summary: Send message to topic
+      description: Send message to PubSub topic
+      operationId: send-message
       requestBody:
         content:
           application/json:
@@ -32,11 +36,13 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+          - dapr-pubsub
   /save:
     post:
-      summary: DB Binding
-      description: DB binding using Dapr API
-      operationId: save
+      summary: Store data in storage
+      description: Use outbound binding to persist data
+      operationId: store-data
       requestBody:
         content:
           application/json:
@@ -48,3 +54,9 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+          - dapr-binding
+tags:
+    - name: dapr-invoke
+    - name: dapr-pubsub
+    - name: dapr-binding

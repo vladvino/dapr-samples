@@ -1,11 +1,18 @@
 # NOTE: Before deploying to a production environment, please review the documentation -> https://aka.ms/self-hosted-gateway-production
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-apim-gateway-env
+data:
+  config.service.endpoint: "https://one.management.azure-api.net/subscriptions/c6a33fd3-e442-48a4-b82d-bcc4ad8a71d7/resourcegroups/vlvinogr-apim/providers/Microsoft.ApiManagement/service/one?api-version=2019-12-01"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-apim-gateway
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: demo-apim-gateway
@@ -28,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: demo-apim-gateway
-        image: mcr.microsoft.com/azure-api-management/gateway:beta
+        image: mcr.microsoft.com/azure-api-management/gateway:latest
         ports:
         - name: http
           containerPort: 8080
